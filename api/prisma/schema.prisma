@@ -16,8 +16,68 @@ datasource db {
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
-  password  String
+  password  String?
+  googleId  String?
   name      String?
+  image     String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  readingList ReadingList[]
+  wishList    WishList[]
+  reviews     Reviews[]
+  followedBy  Follows[]  @relation("following")
+  following   Follows[] @relation("follower")
+ }
+
+model Follows {
+  follower    User @relation("follower", fields: [followerId], references: [id])
+  followerId  Int
+  following   User @relation("following", fields: [followingId], references: [id])
+  followingId Int
+
+  @@id([followerId, followingId])
+}
+
+
+model Books {
+  id              Int      @id @default(autoincrement())
+  title           String
+  isbn            String
+  pageCount       Int
+  publishedDate   DateTime
+  thumbnailUrl    String?
+  shortDescription String?
+  longDescription String?
+  status          String
+  authors         String[]
+  categories      String[]
+  readingList     ReadingList[]
+  wishList        WishList[]
+  reviews         Reviews[]
+}
+
+model ReadingList {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  bookId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  book      Books    @relation(fields: [bookId], references: [id])
+}
+
+model WishList {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  bookId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  book      Books    @relation(fields: [bookId], references: [id])
+}
+
+model Reviews {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  bookId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  book      Books    @relation(fields: [bookId], references: [id])
+  rating    Int
+  review    String
 }
