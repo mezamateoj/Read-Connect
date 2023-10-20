@@ -14,9 +14,15 @@ const getAllBooks = async (req: Request, res: Response) => {
 			.paginate();
 
 		const getBooks = await features.execute();
+		const total = await prisma.books.count();
 		res.json({
-			page: features.page,
-			count: getBooks.length,
+			metadata: {
+				hasNextPage: features.page + features.limit < total,
+				hasPrevPage: features.page > 1,
+				totalPages: Math.ceil(total / features.limit),
+				page: features.page,
+				count: getBooks.length,
+			},
 			data: getBooks,
 		});
 	} catch (error: any) {

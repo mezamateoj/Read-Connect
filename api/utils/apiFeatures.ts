@@ -4,6 +4,7 @@ class ApiFeature {
 	query: any;
 	queryOptions: any;
 	page: number;
+	limit: number;
 
 	constructor(query: any, queryString: any) {
 		this.query = query;
@@ -11,6 +12,7 @@ class ApiFeature {
 		// since prisma doesn't allow chainable methods, we need to create a queryOptions object
 		this.queryOptions = {};
 		this.page = 1;
+		this.limit = 10;
 	}
 
 	filter() {
@@ -91,6 +93,7 @@ class ApiFeature {
 			this.queryString.limit * 1 ? Number(this.queryString.limit) : 10;
 		const skip = (page - 1) * limit;
 
+		this.limit = limit;
 		this.page = page;
 		this.queryOptions.skip = skip;
 		this.queryOptions.take = limit;
