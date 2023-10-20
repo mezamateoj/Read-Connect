@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { BooksProps } from './books';
+import Link from 'next/link';
 
 export default function BooksItems({ b }: { b: BooksProps }) {
 	return (
@@ -19,7 +20,7 @@ export default function BooksItems({ b }: { b: BooksProps }) {
 
 			<div className="flex flex-grow flex-col pt-0.5">
 				<p className="font-medium">
-					{b.title},{' '}
+					<Link href={`/books/${b.id}`}>{b.title}</Link>
 					<span className="text-sm font-light">
 						{b.publishedDate}
 					</span>
