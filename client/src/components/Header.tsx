@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { UserButton } from '@clerk/nextjs';
+import SearchBar from './SearchBar';
 
 function Header() {
 	return (
@@ -6,8 +8,8 @@ function Header() {
 			<Link href="/" className="tracking-widest">
 				ReadConnect.
 			</Link>
-			{/* <SearchOrder /> */}
-			{/* <Username /> */}
+			<SearchBar />
+			<UserButton afterSignOutUrl="/" />
 		</header>
 	);
 }

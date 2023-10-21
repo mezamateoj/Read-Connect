@@ -1,8 +1,11 @@
 import Link from 'next/link';
 import { Button } from './ui/button';
+import { getUser } from '@/app/actions';
 
-function Hero() {
+async function Hero() {
 	const user = 'j';
+	const currentUser = await getUser();
+	console.log(currentUser);
 
 	return (
 		<div className="my-10 flex flex-col items-center justify-center px-4 text-center sm:my-12">

@@ -4,6 +4,7 @@ import { BooksProps } from './books';
 import Link from 'next/link';
 
 export default function BooksItems({ b }: { b: BooksProps }) {
+	console.log('booksItems.tsx: b =', b);
 	return (
 		<li className="flex list-none gap-4 py-2">
 			{b.thumbnailUrl && (
@@ -26,7 +27,13 @@ export default function BooksItems({ b }: { b: BooksProps }) {
 					</span>
 				</p>
 				<p className="text-sm capitalize  text-stone-800">
-					{b.authors.join(', ') || 'Unknown author'}{' '}
+					{b.authors.map((a) => (
+						<Link href={`/books/?authors=${a}`} key={a}>
+							<span className="text-stone-800 hover:underline border-r-2 border-stone-500 mr-1">
+								{a} &nbsp;
+							</span>
+						</Link>
+					))}
 				</p>
 				<span className="text-sm capitalize italic text-stone-500">
 					Category: {b.categories}

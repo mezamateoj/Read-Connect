@@ -18,7 +18,12 @@ export type BooksProps = {
 };
 
 async function Books(props: PageProps) {
-	const { data, metadata } = await getData(props?.searchParams?.page || 1);
+	const { data, metadata } = await getData(
+		props?.searchParams?.page || 1,
+		props?.searchParams || ''
+	);
+
+	console.log('books.tsx: data =', data);
 
 	return (
 		<div className="mr-auto">
@@ -27,7 +32,7 @@ async function Books(props: PageProps) {
 					<BooksItems key={b.id} b={b} />
 				))}
 			</ul>
-			<Pagination {...props.searchParams} {...metadata} />
+			<Pagination {...props} {...metadata} />
 		</div>
 	);
 }

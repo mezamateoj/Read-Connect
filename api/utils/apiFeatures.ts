@@ -86,6 +86,12 @@ class ApiFeature {
 		return this;
 	}
 
+	async getCount() {
+		const total = await this.query.count();
+		const filteredTotal = await this.query.count(this.queryOptions);
+		return { total, filteredTotal };
+	}
+
 	paginate() {
 		const page =
 			this.queryString.page * 1 ? Number(this.queryString.page) : 1;
@@ -93,16 +99,38 @@ class ApiFeature {
 			this.queryString.limit * 1 ? Number(this.queryString.limit) : 10;
 		const skip = (page - 1) * limit;
 
-		this.limit = limit;
 		this.page = page;
+		this.limit = limit;
 		this.queryOptions.skip = skip;
 		this.queryOptions.take = limit;
 
 		return this;
 	}
 
+	async getAllCategories() {
+		const categories = await this.query.groupBy({
+			by: ['categories'],
+			_count: {
+				alias: 'count',
+			},
+		});
+		return categories;
+	}
+
+	async getAllAuthors() {
+		const authors = await this.query.groupBy({
+			by: ['authors'],
+			_count: {
+				alias: 'count',
+			},
+		});
+		return authors;
+	}
+
 	async execute() {
-		return this.query.findMany(this.queryOptions);
+		const getBooks = await this.query.findMany(this.queryOptions);
+
+		return getBooks;
 	}
 }
 
