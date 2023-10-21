@@ -6,12 +6,19 @@ type PaginationProps = {
 	page: number;
 	totalPages: number;
 	hasNextPage: boolean;
+	hasPrevPage: boolean;
+	count: number;
 };
-export default function Pagination(props: PaginationProps) {
-	const { page = 1, totalPages, hasNextPage } = props;
+export default function Pagination(props: any) {
+	console.log('Pagination.tsx: props =', props);
+	const { page = 1, totalPages, hasNextPage, searchParams } = props;
+
 	const currentPage = Math.min(Math.max(Number(page), 1), totalPages);
 
 	const getPagesToShow = () => {
+		// if (totalPages <= 5)
+		// 	return Array.from({ length: totalPages }, (_, i) => i + 1);
+
 		let startPage = currentPage - 2;
 		let endPage = currentPage + 2;
 
@@ -31,12 +38,22 @@ export default function Pagination(props: PaginationProps) {
 
 	const pages = getPagesToShow();
 
+	// // Helper function to generate query string from searchParams object
+	const generateQueryString = () => {
+		const queryString = new URLSearchParams(searchParams).toString();
+		return queryString ? `&${queryString}` : '';
+	};
+
+	console.log('Pagination.tsx: pages =', generateQueryString());
+
 	return (
 		<div className="flex items-center justify-center space-x-6 text-black mt-1 mb-2 py-5">
 			<Link
 				className={cn(
 					'rounded-md border border-gray-300 px-3 py-2 text-sm font-medium hover:bg-gray-50',
-					currentPage === 1 ? 'pointer-events-none bg-gray-100' : ''
+					currentPage === 1
+						? 'pointer-events-none bg-gray-100 line-through text-gray-500'
+						: ''
 				)}
 				href={`?page=${currentPage - 1}`}
 			>
@@ -68,9 +85,11 @@ export default function Pagination(props: PaginationProps) {
 			<Link
 				className={cn(
 					'rounded-md border border-gray-300 px-3 py-2 text-sm font-medium hover:bg-gray-50',
-					!hasNextPage ? 'pointer-events-none bg-gray-100' : ''
+					!hasNextPage
+						? 'pointer-events-none bg-gray-100 line-through text-gray-500'
+						: ''
 				)}
-				href={`?page=${currentPage + 1}`}
+				href={`?page=${currentPage + 1}${generateQueryString()}`}
 			>
 				Next
 			</Link>
