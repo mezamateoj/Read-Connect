@@ -21,8 +21,6 @@ function SearchBar() {
 		[searchParams]
 	);
 
-	console.log('SearchBar.tsx: query =', query);
-
 	return (
 		<form
 			onSubmit={(e) => {
