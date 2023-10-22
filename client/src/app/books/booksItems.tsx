@@ -4,7 +4,6 @@ import { BooksProps } from './books';
 import Link from 'next/link';
 
 export default function BooksItems({ b }: { b: BooksProps }) {
-	console.log('booksItems.tsx: b =', b);
 	return (
 		<li className="flex list-none gap-4 py-2">
 			{b.thumbnailUrl && (

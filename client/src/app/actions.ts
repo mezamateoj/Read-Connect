@@ -39,7 +39,8 @@ export async function getData(pageNumber: any, params: any = {}) {
 
 export async function getUser() {
 	// Get the userId from auth() -- if null, the user is not logged in
-	const { userId } = auth();
+	const { userId, getToken } = auth();
+	console.log(userId, getToken);
 
 	if (userId) {
 		// Query DB for user specific information or display assets only to logged in users

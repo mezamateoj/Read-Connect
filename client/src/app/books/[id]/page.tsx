@@ -1,3 +1,4 @@
+import User from '@/components/User';
 import React from 'react';
 
 const getData = async (id: string) => {
@@ -16,6 +17,7 @@ export default async function page({ params }: { params: { id: string } }) {
 			<h1>Book</h1>
 			<h2>{book.title}</h2>
 			<p>{book.longDescription}</p>
+			<User id={params.id} />
 		</div>
 	);
 }
