@@ -5,8 +5,6 @@ import { Button } from './ui/button';
 
 export default function User({ id }: { id: string }) {
 	const { userId, getToken } = useAuth();
-	console.log(userId);
-	console.log(getToken);
 
 	const handleReview = async () => {
 		const res = await fetch(`http://localhost:3001/reviews/${id}/`, {

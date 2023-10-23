@@ -3,7 +3,6 @@ import { Button } from './ui/button';
 import { getUser } from '@/app/actions';
 
 async function Hero() {
-	const user = 'j';
 	const currentUser = await getUser();
 	console.log(currentUser);
 
@@ -16,15 +15,12 @@ async function Hero() {
 					The best place to find your next favorite book.
 				</span>
 			</h1>
-			{user !== 'mateo' ? (
-				<>
-					<p className="mb-3 text-xl font-semibold">Welcome {user}</p>
-					<Link href="/books">
-						<Button>Explore</Button>
-					</Link>
-				</>
-			) : // <CreateUser />
-			null}
+			<p className="mb-3 text-xl font-semibold">
+				Welcome {currentUser?.username || ''}
+			</p>
+			<Link href="/books">
+				<Button>Explore</Button>
+			</Link>
 		</div>
 	);
 }
