@@ -4,7 +4,6 @@ import { getUser } from '@/app/actions';
 
 async function Hero() {
 	const currentUser = await getUser();
-	console.log(currentUser);
 
 	return (
 		<div className="my-10 flex flex-col items-center justify-center px-4 text-center sm:my-12">

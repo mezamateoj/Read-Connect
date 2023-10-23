@@ -39,31 +39,6 @@ export default function BooksItems({ b }: { b: BooksProps }) {
 				</span>
 
 				<p className="text-sm ">{b.shortDescription}</p>
-				{/* <div className="mt-auto flex items-center justify-between">
-            {!soldOut ? (
-              <p className="text-sm">{formatCurrency(unitPrice)}</p>
-            ) : (
-              <p className="text-sm font-medium uppercase text-stone-500">
-                Sold out
-              </p>
-            )}
-            {!soldOut ? (
-              currentQuantity === 0 ? (
-                <Button type="small" onClick={handleAddCart}>
-                  Add to cart
-                </Button>
-              ) : (
-                <div className="flex flex-row-reverse items-center gap-3">
-                  <DeleteItem pizzaId={id} name={name} />
-                  <UpdateItemQuantity pizzaId={id} />
-                </div>
-              )
-            ) : (
-              <Button type="small" disabled>
-                Sold out
-              </Button>
-            )}
-          </div> */}
 			</div>
 		</li>
 	);
