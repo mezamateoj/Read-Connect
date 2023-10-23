@@ -1,7 +1,6 @@
 'use server';
 import { auth, currentUser } from '@clerk/nextjs';
 import { revalidatePath } from 'next/cache';
-import axios from 'axios';
 
 export async function getData(pageNumber: any, params: any = {}) {
 	('use server');
@@ -39,12 +38,10 @@ export async function getData(pageNumber: any, params: any = {}) {
 
 export async function getUser() {
 	// Get the userId from auth() -- if null, the user is not logged in
-	const { userId, getToken } = auth();
-	console.log(userId, getToken);
+	const { userId } = auth();
 
 	if (userId) {
 		// Query DB for user specific information or display assets only to logged in users
-		// post axios to the express server
 	}
 
 	// Get the User object when you need access to the user's information

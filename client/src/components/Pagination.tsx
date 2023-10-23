@@ -10,7 +10,6 @@ type PaginationProps = {
 	count: number;
 };
 export default function Pagination(props: any) {
-	console.log('Pagination.tsx: props =', props);
 	const { page = 1, totalPages, hasNextPage, searchParams } = props;
 
 	const currentPage = Math.min(Math.max(Number(page), 1), totalPages);
@@ -38,7 +37,7 @@ export default function Pagination(props: any) {
 
 	const pages = getPagesToShow();
 
-	// // Helper function to generate query string from searchParams object
+	// Helper function to generate query string from searchParams object
 	const generateQueryString = () => {
 		const queryString = new URLSearchParams(searchParams).toString();
 		return queryString ? `&${queryString}` : '';

@@ -9,7 +9,16 @@ interface ProvidersProps {
 }
 
 export default function Providers({ children }: ProvidersProps) {
-	const [queryClient] = React.useState(() => new QueryClient());
+	const [queryClient] = React.useState(
+		() =>
+			new QueryClient({
+				defaultOptions: {
+					queries: {
+						staleTime: 0,
+					},
+				},
+			})
+	);
 
 	return (
 		<QueryClientProvider client={queryClient}>

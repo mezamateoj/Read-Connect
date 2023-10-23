@@ -22,8 +22,13 @@ async function Books(props: PageProps) {
 		props?.searchParams?.page || 1,
 		props?.searchParams || ''
 	);
+	// const { data, isLoading, error } = useQuery({
+	// 	queryKey: ['books'],
+	// 	queryFn: () =>
+	// 		getData(props?.searchParams?.page || 1, props?.searchParams || ''),
+	// });
 
-	console.log('books.tsx: data =', data);
+	// if (isLoading) return <div>Loading...</div>;
 
 	return (
 		<div className="mr-auto">
@@ -32,7 +37,9 @@ async function Books(props: PageProps) {
 					<BooksItems key={b.id} b={b} />
 				))}
 			</ul>
-			<Pagination {...props} {...metadata} />
+			<div className="">
+				<Pagination {...props} {...metadata} />
+			</div>
 		</div>
 	);
 }

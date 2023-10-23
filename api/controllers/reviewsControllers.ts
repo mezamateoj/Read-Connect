@@ -8,17 +8,19 @@ const createReview = async (req: Request, res: Response) => {
 	const { id } = req.params;
 	const { review, rating, userId } = req.body;
 	try {
-		// check if the user already has a review for this book
-		const existingReview = await prisma.reviews.findFirst({
+		const existingReview = await prisma.reviews.findMany({
 			where: {
-				userId: userId,
+				// userId: userId,
 				bookId: Number(id),
 			},
 		});
 
-		if (existingReview) {
-			throw new Error('You already have a review for this book');
-		}
+		// check if the user already has a review for this book
+		existingReview.map((review) => {
+			if (review.userId === userId) {
+				throw new Error('You already have a review for this book');
+			}
+		});
 
 		const newReview = await prisma.reviews.create({
 			data: {
@@ -28,6 +30,9 @@ const createReview = async (req: Request, res: Response) => {
 				userId: userId,
 			},
 		});
+
+		if (!newReview) throw new Error('Review could not be created');
+
 		res.status(201).json({
 			status: 'success',
 			review: newReview,
@@ -40,4 +45,39 @@ const createReview = async (req: Request, res: Response) => {
 	}
 };
 
-export { createReview };
+const getAllReviews = async (req: Request, res: Response) => {
+	try {
+		const reviews = await prisma.reviews.findMany();
+		res.status(200).json({
+			status: 'success',
+			reviews,
+		});
+	} catch (error: any) {
+		res.status(400).json({
+			status: 'fail',
+			message: `Something went wrong: ${error?.message}`,
+		});
+	}
+};
+
+const getReviewById = async (req: Request, res: Response) => {
+	const { id } = req.params;
+	try {
+		const review = await prisma.reviews.findMany({
+			where: {
+				bookId: Number(id),
+			},
+		});
+		res.status(200).json({
+			status: 'success',
+			review,
+		});
+	} catch (error: any) {
+		res.status(400).json({
+			status: 'fail',
+			message: `Something went wrong: ${error?.message}`,
+		});
+	}
+};
+
+export { createReview, getAllReviews, getReviewById };
