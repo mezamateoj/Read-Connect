@@ -111,3 +111,65 @@ export const getReviews = async (id: string) => {
 	const data = await res.json();
 	return data;
 };
+
+export async function addBook(id: any, userId: string) {
+	const postData = {
+		userId: userId,
+		bookId: Number(id),
+	};
+
+	const res = await fetch(`http://localhost:3001/reading-list/${id}`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(postData),
+	});
+
+	if (!res.ok) throw new Error('Book already in reading list');
+
+	const data = await res.json();
+	return data;
+}
+
+export async function getReadingList(userId: string) {
+	const res = await fetch(`http://localhost:3001/reading-list/${userId}`, {
+		cache: 'no-store',
+	});
+	const data = await res.json();
+	return data;
+}
+
+export async function addBookToWantList(id: any, userId: string) {
+	const postData = {
+		userId: userId,
+		bookId: Number(id),
+	};
+
+	const res = await fetch(
+		`http://localhost:3001/reading-list/want-read/${id}`,
+		{
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(postData),
+		}
+	);
+
+	if (!res.ok) throw new Error('Book already in reading list');
+
+	const data = await res.json();
+	return data;
+}
+
+export async function getReadList(userId: string) {
+	const res = await fetch(
+		`http://localhost:3001/reading-list/want-read/${userId}`,
+		{
+			cache: 'no-store',
+		}
+	);
+	const data = await res.json();
+	return data;
+}

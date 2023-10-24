@@ -38,6 +38,7 @@ export default function TextReview({
 	userId: string;
 	id: string;
 }) {
+	// use of custom hook to mutate data
 	const { isLoading, mutate } = useCreateReview();
 
 	const form = useForm<z.infer<typeof FormSchema>>({
@@ -65,7 +66,7 @@ export default function TextReview({
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
-				className="w-2/3 space-y-6"
+				className="w-2/3 space-y-2 mt-2 py-2"
 			>
 				<FormField
 					control={form.control}

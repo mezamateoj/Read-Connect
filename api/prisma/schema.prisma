@@ -60,17 +60,17 @@ model Books {
 
 model ReadingList {
   id        Int      @id @default(autoincrement())
-  userId    Int
+  userId    String
   bookId    Int
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [clerkId])
   book      Books    @relation(fields: [bookId], references: [id])
 }
 
 model WishList {
   id        Int      @id @default(autoincrement())
-  userId    Int
+  userId    String
   bookId    Int
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [clerkId])
   book      Books    @relation(fields: [bookId], references: [id])
 }
 
