@@ -15,8 +15,8 @@ export default function Pagination(props: any) {
 	const currentPage = Math.min(Math.max(Number(page), 1), totalPages);
 
 	const getPagesToShow = () => {
-		// if (totalPages <= 5)
-		// 	return Array.from({ length: totalPages }, (_, i) => i + 1);
+		if (totalPages <= 5)
+			return Array.from({ length: totalPages }, (_, i) => i + 1);
 
 		let startPage = currentPage - 2;
 		let endPage = currentPage + 2;
@@ -54,7 +54,7 @@ export default function Pagination(props: any) {
 						? 'pointer-events-none bg-gray-100 line-through text-gray-500'
 						: ''
 				)}
-				href={`?page=${currentPage - 1}`}
+				href={`?page=${currentPage - 1}${generateQueryString()}`}
 			>
 				Previous
 			</Link>
@@ -74,7 +74,7 @@ export default function Pagination(props: any) {
 							i === 0 ? 'rounded-l-md' : '',
 							i === pages.length - 1 ? 'rounded-r-md' : ''
 						)}
-						href={`?page=${p}`}
+						href={`?page=${p}${generateQueryString()}`}
 					>
 						{p}
 					</Link>

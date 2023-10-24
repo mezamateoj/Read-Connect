@@ -4,6 +4,8 @@ import React from 'react';
 import { Button } from './ui/button';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
+import Review from './Review';
+import TextReview from './TextReview';
 
 const postReview = async (id: string, userId: string) => {
 	const res = await fetch(`http://localhost:3001/reviews/${id}/`, {
@@ -35,28 +37,28 @@ const getReviews = async (id: string) => {
 
 export default function User({ id }: { id: string }) {
 	const { userId } = useAuth();
-	const queryClient = useQueryClient();
+	// const queryClient = useQueryClient();
 
 	const { data, isLoading: isLoadingReviews } = useQuery({
 		queryKey: ['reviews'],
 		queryFn: () => getReviews(id),
 	});
 
-	const { isLoading, mutate } = useMutation({
-		mutationFn: (id: string) => postReview(id, userId!),
-		onSuccess: () => {
-			toast.success('Review added!');
-			queryClient.invalidateQueries({
-				queryKey: ['reviews'],
-			});
-		},
-		onError: (error: any) => {
-			toast.error(`${error.message}`);
-			console.log(error);
-		},
-	});
+	// const { isLoading, mutate } = useMutation({
+	// 	mutationFn: (id: string) => postReview(id, userId!),
+	// 	onSuccess: () => {
+	// 		toast.success('Review added!');
+	// 		queryClient.invalidateQueries({
+	// 			queryKey: ['reviews'],
+	// 		});
+	// 	},
+	// 	onError: (error: any) => {
+	// 		toast.error(`${error.message}`);
+	// 		console.log(error);
+	// 	},
+	// });
 
-	if (isLoading) return <div>loading...</div>;
+	// if (isLoading) return <div>loading...</div>;
 
 	return (
 		<div>
@@ -71,7 +73,10 @@ export default function User({ id }: { id: string }) {
 					  ))
 					: 'Add a review'}
 			</div>
-			<Button onClick={() => mutate(id)}>send review</Button>
+			<TextReview userId={userId!} id={id} />
+			{/* <Button disabled={isLoadingReviews} onClick={() => mutate(id)}>
+				send review
+			</Button> */}
 		</div>
 	);
 }

@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export default function BooksItems({ b }: { b: BooksProps }) {
 	return (
-		<li className="flex list-none gap-4 py-2">
+		<li className="flex list-none gap-4 py-2 sm:flex-row flex-col">
 			{b.thumbnailUrl && (
 				<Image
 					src={b.thumbnailUrl}
@@ -20,25 +20,32 @@ export default function BooksItems({ b }: { b: BooksProps }) {
 
 			<div className="flex flex-grow flex-col pt-0.5">
 				<p className="font-medium">
-					<Link href={`/books/${b.id}`}>{b.title}</Link>
+					<Link href={`/books/${b.id}`}>
+						<span className="hover:underline">{b.title}</span>
+					</Link>
 					<span className="text-sm font-light">
 						{b.publishedDate}
 					</span>
 				</p>
-				<p className="text-sm capitalize  text-stone-800">
-					{b.authors.map((a) => (
-						<Link href={`/books/?authors=${a}`} key={a}>
-							<span className="text-stone-800 hover:underline border-r-2 border-stone-500 mr-1">
-								{a} &nbsp;
-							</span>
-						</Link>
-					))}
+				<p className="text-sm capitalize  text-stone-800 divide-x-2 divide-slate-400 gap-2">
+					{b.authors.map(
+						(a) =>
+							a !== '' && (
+								<Link href={`/books/?authors=${a}`} key={a}>
+									<span className="text-stone-800 hover:underline ml-1">
+										{a} &nbsp;
+									</span>
+								</Link>
+							)
+					)}
 				</p>
 				<span className="text-sm capitalize italic text-stone-500">
 					Category: {b.categories}
 				</span>
 
-				<p className="text-sm ">{b.shortDescription}</p>
+				<p className="text-sm sm:text-justify tracking-tight sm:tracking-normal pr-4 sm:p-1">
+					{b.shortDescription}
+				</p>
 			</div>
 		</li>
 	);

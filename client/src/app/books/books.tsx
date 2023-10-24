@@ -2,6 +2,7 @@ import BooksItems from './booksItems';
 import { getData } from '@/app/actions';
 import { PageProps } from './page';
 import Pagination from '@/components/Pagination';
+import Empty from '@/components/Empty';
 
 export type BooksProps = {
 	id: number;
@@ -29,14 +30,18 @@ async function Books(props: PageProps) {
 	// });
 
 	// if (isLoading) return <div>Loading...</div>;
+	console.log(data);
 
 	return (
-		<div className="mr-auto">
-			<ul className="divide-y divide-stone-300/80 px-4 sm:px-3">
-				{data.map((b: BooksProps) => (
-					<BooksItems key={b.id} b={b} />
-				))}
-			</ul>
+		<div className="flex flex-col justify-between flex-1">
+			<div className="flex-grow">
+				<ul className="divide-y divide-stone-300/80 px-4 sm:px-3">
+					{data.length === 0 && <Empty />}
+					{data.map((b: BooksProps) => (
+						<BooksItems key={b.id} b={b} />
+					))}
+				</ul>
+			</div>
 			<div className="">
 				<Pagination {...props} {...metadata} />
 			</div>
