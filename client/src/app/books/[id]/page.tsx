@@ -4,6 +4,7 @@ import Image from 'next/image';
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
+import Back from '@/components/Back';
 
 const getData = async (id: string) => {
 	const res = await fetch(`http://localhost:3001/books/${id}`);
@@ -28,6 +29,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
 	return (
 		<div className="flex flex-col items-center justify-center mt-8 px-6 py-5 gap-5">
+			<Back />
 			<div className="flex items-center justify-center flex-col">
 				<h1>{book.title}</h1>
 				{book.thumbnailUrl && (
@@ -38,6 +40,7 @@ export default function Page({ params }: { params: { id: string } }) {
 						height={96}
 					/>
 				)}
+				B
 			</div>
 
 			<div className="flex flex-col w-4/6">

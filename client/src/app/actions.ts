@@ -1,6 +1,7 @@
 'use server';
 import { auth, currentUser } from '@clerk/nextjs';
 import { revalidatePath } from 'next/cache';
+import axios from 'axios';
 
 export async function getData(pageNumber: any, params: any = {}) {
 	('use server');
@@ -81,3 +82,32 @@ export async function getAllCategories() {
 
 	return data;
 }
+
+export interface ReviewData {
+	review: string;
+	rating: number;
+	userId: string;
+}
+
+export const postReview = async (id: string, data: ReviewData) => {
+	const res = await fetch(`http://localhost:3001/reviews/${id}/`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(data),
+	});
+
+	if (!res.ok) {
+		throw new Error('You already have a review for this book');
+	}
+
+	const result = await res.json();
+	return result;
+};
+
+export const getReviews = async (id: string) => {
+	const res = await fetch(`http://localhost:3001/reviews/${id}/`, {});
+	const data = await res.json();
+	return data;
+};
