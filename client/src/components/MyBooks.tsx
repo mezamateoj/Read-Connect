@@ -11,14 +11,13 @@ export default function MyBooks() {
 	const { data, isLoading, error } = useQuery({
 		queryKey: ['reading-list'],
 		queryFn: () => getReadingList(userId!),
-		// refetchOnMount: true,
 	});
 
 	if (isLoading) return <div>Loading...</div>;
 
 	return (
 		<div>
-			<h1>Want to Read</h1>
+			<h1>Read Books</h1>
 			<div>
 				{data.readingList.map((book: BooksProps) => (
 					<BooksItems key={book.id} b={book} />

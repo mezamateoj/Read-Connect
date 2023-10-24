@@ -1,7 +1,6 @@
 'use server';
 import { auth, currentUser } from '@clerk/nextjs';
 import { revalidatePath } from 'next/cache';
-import axios from 'axios';
 
 export async function getData(pageNumber: any, params: any = {}) {
 	('use server');
@@ -112,6 +111,7 @@ export const getReviews = async (id: string) => {
 	return data;
 };
 
+// add book to read list
 export async function addBook(id: any, userId: string) {
 	const postData = {
 		userId: userId,
@@ -126,12 +126,13 @@ export async function addBook(id: any, userId: string) {
 		body: JSON.stringify(postData),
 	});
 
-	if (!res.ok) throw new Error('Book already in reading list');
+	if (!res.ok) throw new Error('Book already in read list');
 
 	const data = await res.json();
 	return data;
 }
 
+// get read books
 export async function getReadingList(userId: string) {
 	const res = await fetch(`http://localhost:3001/reading-list/${userId}`, {
 		cache: 'no-store',
@@ -140,6 +141,7 @@ export async function getReadingList(userId: string) {
 	return data;
 }
 
+// add book to want to read list
 export async function addBookToWantList(id: any, userId: string) {
 	const postData = {
 		userId: userId,
@@ -163,7 +165,8 @@ export async function addBookToWantList(id: any, userId: string) {
 	return data;
 }
 
-export async function getReadList(userId: string) {
+// get want to read books
+export async function getWantReadList(userId: string) {
 	const res = await fetch(
 		`http://localhost:3001/reading-list/want-read/${userId}`,
 		{

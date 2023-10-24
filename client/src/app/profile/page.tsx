@@ -9,9 +9,8 @@ export default function page() {
 			<h1>My Books</h1>
 			<div className="flex gap-2">
 				<Link href="/profile/list">
-					<Button>Read</Button>
+					<Button>Want to Read</Button>
 				</Link>
-				<Button>Want to read</Button>
 			</div>
 			<div>
 				<MyBooks />

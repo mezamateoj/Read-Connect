@@ -6,8 +6,8 @@ import { useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import Back from '@/components/Back';
 import { Skeleton } from '@/components/ui/skeleton';
-import Read from '@/components/Read';
-import AddToReadingList from '@/components/AddToReadingList';
+import AddToReadList from '@/components/AddToReadList';
+import AddToWantToRead from '@/components/AddToWantToRead';
 
 const getData = async (id: string) => {
 	const res = await fetch(`http://localhost:3001/books/${id}`);
@@ -53,8 +53,8 @@ export default function Page({ params }: { params: { id: string } }) {
 					)}
 				</div>
 				<div className="flex gap-1">
-					<AddToReadingList id={params.id} />
-					<Read id={params.id} />
+					<AddToReadList id={params.id} />
+					<AddToWantToRead id={params.id} />
 				</div>
 			</div>
 

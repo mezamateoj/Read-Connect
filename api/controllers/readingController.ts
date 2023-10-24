@@ -4,6 +4,7 @@ import ApiFeature from '../utils/apiFeatures';
 
 const prisma = new PrismaClient();
 
+// POST add to read books list
 const createReadingList = async (req: Request, res: Response) => {
 	const { id } = req.params;
 	const { userId } = req.body;
@@ -38,6 +39,7 @@ const createReadingList = async (req: Request, res: Response) => {
 	}
 };
 
+// GET read books list by user id
 const getReadingList = async (req: Request, res: Response) => {
 	const { clerkId } = req.params;
 
@@ -76,6 +78,7 @@ const getReadingList = async (req: Request, res: Response) => {
 	}
 };
 
+// Add to want to read list
 const createRead = async (req: Request, res: Response) => {
 	const { id } = req.params;
 	const { userId } = req.body;
@@ -110,6 +113,7 @@ const createRead = async (req: Request, res: Response) => {
 	}
 };
 
+// GET want to read list by user id
 const getReadList = async (req: Request, res: Response) => {
 	const { clerkId } = req.params;
 

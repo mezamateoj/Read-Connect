@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 import { useAuth } from '@clerk/nextjs';
 import { addBook } from '@/app/actions';
 
-export default function AddToReadingList({ id }: { id: string }) {
+export default function AddToReadList({ id }: { id: string }) {
 	const { userId } = useAuth();
 	const queryClient = useQueryClient();
 
@@ -15,21 +15,21 @@ export default function AddToReadingList({ id }: { id: string }) {
 		mutationFn: () => addBook(id, userId!),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ['reading-list'] });
-			toast.success('Added to want to read list');
+			toast.success('Added to read list');
 		},
 		onError: () => {
-			toast.error('Book already in want to read list');
+			toast.error('Book already in read list');
 		},
 	});
 
 	if (error) {
-		toast.error('Book already in want to read list');
+		toast.error('Book already in read list');
 	}
 
 	return (
 		<div>
 			<Button disabled={isLoading} onClick={() => mutate()}>
-				Want to Read
+				Mark as read
 			</Button>
 		</div>
 	);

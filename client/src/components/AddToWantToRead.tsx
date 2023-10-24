@@ -5,28 +5,28 @@ import { useAuth } from '@clerk/nextjs';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-export default function Read({ id }: { id: string }) {
+export default function AddToWantToRead({ id }: { id: string }) {
 	const { userId } = useAuth();
 	const queryClient = useQueryClient();
 
 	const { mutate, isLoading, error } = useMutation({
 		mutationFn: () => addBookToWantList(id, userId!),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ['read-list'] });
-			toast.success('Added to read list');
+			queryClient.invalidateQueries({ queryKey: ['want-read-list'] });
+			toast.success('Added to want to read list');
 		},
 		onError: () => {
-			toast.error('Book already in read list');
+			toast.error('Book already in want to read list');
 		},
 	});
 
 	if (error) {
-		toast.error('Book already in read list');
+		toast.error('Book already in want to read list');
 	}
 	return (
 		<div>
 			<Button disabled={isLoading} onClick={() => mutate()}>
-				Mark as read
+				Want to read
 			</Button>
 		</div>
 	);
