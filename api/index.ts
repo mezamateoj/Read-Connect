@@ -11,6 +11,7 @@ import {
 
 import bookRoutes from './routes/bookRoutes';
 import reviewsRoutes from './routes/reviewsRoutes';
+import readingListRoutes from './routes/readingListRoutes';
 
 const PORT = process.env.PORT || 8000;
 
@@ -35,6 +36,7 @@ app.use(cors());
 
 app.use('/books', bookRoutes);
 app.use('/reviews', reviewsRoutes);
+app.use('/reading-list', readingListRoutes);
 
 // app.use('/reviews/:bookId', ClerkExpressWithAuth());
 
