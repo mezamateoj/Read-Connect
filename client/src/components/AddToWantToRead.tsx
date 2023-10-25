@@ -4,6 +4,7 @@ import { addBookToWantList } from '@/app/actions';
 import { useAuth } from '@clerk/nextjs';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
+import { LoaderIcon } from 'lucide-react';
 
 export default function AddToWantToRead({ id }: { id: string }) {
 	const { userId } = useAuth();
@@ -22,6 +23,16 @@ export default function AddToWantToRead({ id }: { id: string }) {
 
 	if (error) {
 		toast.error('Book already in want to read list');
+	}
+
+	if (isLoading) {
+		return (
+			<div>
+				<Button disabled={isLoading}>
+					<LoaderIcon className="animate-spin" />
+				</Button>
+			</div>
+		);
 	}
 	return (
 		<div>

@@ -26,7 +26,6 @@ function SearchBar() {
 		<form
 			onSubmit={(e) => {
 				e.preventDefault();
-				// <pathname>?sort=asc
 				router.push('/books' + '?' + createQueryString('title', query));
 				setQuery('');
 			}}
