@@ -63,12 +63,47 @@ const getReadingList = async (req: Request, res: Response) => {
 					in: findAllBooks,
 				},
 			},
+			include: {
+				reviews: true,
+			},
 		});
 
 		res.status(200).json({
 			status: 'success',
 			count: books.length,
 			readingList: books,
+		});
+	} catch (error: any) {
+		res.status(400).json({
+			status: 'fail',
+			message: `Something went wrong: ${error?.message}`,
+		});
+	}
+};
+
+// DELETE remove book from read or want to read list
+const deleteReadBook = async (req: Request, res: Response) => {
+	const { clerkId } = req.params;
+	const { bookId } = req.body;
+
+	try {
+		await prisma.readingList.deleteMany({
+			where: {
+				bookId: bookId,
+				userId: clerkId,
+			},
+		});
+
+		await prisma.wishList.deleteMany({
+			where: {
+				bookId: bookId,
+				userId: clerkId,
+			},
+		});
+
+		res.status(200).json({
+			status: 'success',
+			message: `Book id ${bookId} deleted from list`,
 		});
 	} catch (error: any) {
 		res.status(400).json({
@@ -137,6 +172,9 @@ const getReadList = async (req: Request, res: Response) => {
 					in: findAllBooks,
 				},
 			},
+			include: {
+				reviews: true,
+			},
 		});
 
 		res.status(200).json({
@@ -152,4 +190,10 @@ const getReadList = async (req: Request, res: Response) => {
 	}
 };
 
-export { createReadingList, getReadingList, createRead, getReadList };
+export {
+	createReadingList,
+	getReadingList,
+	createRead,
+	getReadList,
+	deleteReadBook,
+};

@@ -1,8 +1,7 @@
 'use client';
+import React from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from './ui/button';
-
-import React from 'react';
 import { toast } from 'sonner';
 import { useAuth } from '@clerk/nextjs';
 import { addBook } from '@/app/actions';
@@ -22,9 +21,7 @@ export default function AddToReadList({ id }: { id: string }) {
 		},
 	});
 
-	if (error) {
-		toast.error('Book already in read list');
-	}
+	if (isLoading) return <div>Loading...</div>;
 
 	return (
 		<div>
