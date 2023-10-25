@@ -7,7 +7,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select';
-import { ArrowDown01, ArrowDown10, ArrowUp10 } from 'lucide-react';
+import { ArrowDown10, ArrowUp10 } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 
 import React from 'react';

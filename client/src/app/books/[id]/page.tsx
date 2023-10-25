@@ -28,7 +28,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
 	if (isLoading)
 		return (
-			<div className="flex items-center justify-center mt-10">
+			<div className="flex items-center justify-center mt-10 h-screen">
 				<Skeleton className="w-[500px] h-[200px] rounded-md" />
 			</div>
 		);
@@ -36,33 +36,45 @@ export default function Page({ params }: { params: { id: string } }) {
 	const book = data.book;
 
 	return (
-		<div className="flex items-center justify-around mt-8 px-8 py-5 gap-5 relative">
-			<div className="flex flex-col gap-5 max-w-2xl">
-				<div className="flex top-0 absolute">
+		<div className="flex flex-col justify-around mt-2 px-6 py-4 gap-8">
+			<div className="flex justify-start">
+				<div className="flex">
 					<Back />
 				</div>
-				<div>
-					<h1 className="font-semibold text-lg">{book.title}</h1>
-					{book.thumbnailUrl && (
-						<Image
-							src={book.thumbnailUrl}
-							alt={book.title}
-							width={150}
-							height={150}
-						/>
-					)}
-				</div>
-				<div className="flex gap-1">
-					<AddToReadList id={params.id} />
-					<AddToWantToRead id={params.id} />
-				</div>
 			</div>
+			<div className="flex gap-5  justify-around">
+				<div className="flex flex-col gap-5 max-w-2xl items-center">
+					<div className="flex flex-col gap-10 items-center">
+						<div>
+							<h1 className="font-semibold text-2xl">
+								{book.title}
+							</h1>
+							<h2 className="truncate max-w-[300px] text-stone-600">
+								{book.authors.join(', ')}
+							</h2>
+						</div>
 
-			<div className="flex flex-col w-4/6">
-				<p className="text-sm text-slate-800 justified max-w-4xl">
-					{book.longDescription}
-				</p>
-				<User id={params.id} />
+						{book.thumbnailUrl && (
+							<Image
+								src={book.thumbnailUrl}
+								alt={book.title}
+								width={150}
+								height={150}
+							/>
+						)}
+					</div>
+					<div className="flex gap-1">
+						<AddToReadList id={params.id} />
+						<AddToWantToRead id={params.id} />
+					</div>
+				</div>
+
+				<div className="flex flex-col w-4/6">
+					<p className="text-sm text-slate-800 justified max-w-4xl">
+						{book.longDescription}
+					</p>
+					<User id={params.id} />
+				</div>
 			</div>
 		</div>
 	);

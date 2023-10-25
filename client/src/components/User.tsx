@@ -21,11 +21,20 @@ export default function User({ id }: { id: string }) {
 		queryFn: () => getReviews(id),
 	});
 
-	if (isLoadingReviews) return <p>Loading...</p>;
+	if (isLoadingReviews)
+		return (
+			<p>
+				<LoaderIcon className="animate-spin" />
+			</p>
+		);
 
 	return (
 		<div className="py-2">
-			<TextReview userId={userId!} id={id} />
+			{isLoadingReviews ? (
+				<LoaderIcon className="animate-spin mt-5" />
+			) : (
+				<TextReview userId={userId!} id={id} />
+			)}
 			<div className="mt-5 divide-y-2 divide-slate-300">
 				<h2 className="font-bold text-lg py-2">Reviews</h2>
 				{isLoadingReviews && (
