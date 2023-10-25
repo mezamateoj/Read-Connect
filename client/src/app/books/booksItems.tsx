@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { BooksProps } from './books';
 import Link from 'next/link';
+import { formatDate } from '@/lib/utils';
 
 export default function BooksItems({ b }: { b: BooksProps }) {
 	return (
@@ -23,8 +24,8 @@ export default function BooksItems({ b }: { b: BooksProps }) {
 					<Link href={`/books/${b.id}`}>
 						<span className="hover:underline">{b.title}</span>
 					</Link>
-					<span className="text-sm font-light">
-						{b.publishedDate}
+					<span className="text-sm font-light ml-2">
+						{formatDate(b.publishedDate)}
 					</span>
 				</p>
 				<p className="text-sm capitalize  text-stone-800 divide-x-2 divide-slate-400 gap-2">
@@ -40,7 +41,7 @@ export default function BooksItems({ b }: { b: BooksProps }) {
 					)}
 				</p>
 				<span className="text-sm capitalize italic text-stone-500">
-					Category: {b.categories}
+					Category: {b.categories.join(', ')}
 				</span>
 
 				<p className="text-sm sm:text-justify tracking-tight sm:tracking-normal pr-4 sm:p-1">

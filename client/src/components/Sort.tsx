@@ -20,6 +20,7 @@ import {
 
 import { useRouter } from 'next/navigation';
 import Back from './Back';
+import PageCountSort from './PageCountSort';
 
 export function Sort({
 	URL,
@@ -93,6 +94,7 @@ export function Sort({
 				</PopoverContent>
 			</Popover>
 			<Back />
+			<PageCountSort />
 			<div className="flex items-center gap-1">
 				<Button onClick={() => router.push('/books')}>
 					<RouteOff

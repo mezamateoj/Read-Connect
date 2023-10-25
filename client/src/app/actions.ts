@@ -10,11 +10,11 @@ export async function getData(pageNumber: any, params: any = {}) {
 
 	if (queryParams.includes('title')) {
 		const res = await fetch(
-			`http://localhost:3001/books/search/${queryParams.split('=')[1]}`,
-			{
-				// next: { revalidate: 3600 },
-				cache: 'no-cache',
-			}
+			`http://localhost:3001/books/search/${queryParams.split('=')[1]}`
+			// {
+			// 	// next: { revalidate: 3600 },
+			// 	cache: 'no-cache',
+			// }
 		);
 		const data = await res.json();
 		revalidatePath(`/books`);
@@ -23,11 +23,11 @@ export async function getData(pageNumber: any, params: any = {}) {
 
 	// the data gets cached by the browser
 	const res = await fetch(
-		`http://localhost:3001/books/?page=${pageNumber}&${queryParams}`,
-		{
-			// next: { revalidate: 3600 },
-			cache: 'no-cache',
-		}
+		`http://localhost:3001/books/?page=${pageNumber}&${queryParams}`
+		// {
+		// 	// next: { revalidate: 3600 },
+		// 	cache: 'no-cache',
+		// }
 	);
 
 	const data = await res.json();
