@@ -4,6 +4,7 @@ import ApiFeature from '../utils/apiFeatures';
 
 const prisma = new PrismaClient();
 
+// POST add to read books list
 const createReadingList = async (req: Request, res: Response) => {
 	const { id } = req.params;
 	const { userId } = req.body;
@@ -38,6 +39,7 @@ const createReadingList = async (req: Request, res: Response) => {
 	}
 };
 
+// GET read books list by user id
 const getReadingList = async (req: Request, res: Response) => {
 	const { clerkId } = req.params;
 
@@ -61,6 +63,9 @@ const getReadingList = async (req: Request, res: Response) => {
 					in: findAllBooks,
 				},
 			},
+			include: {
+				reviews: true,
+			},
 		});
 
 		res.status(200).json({
@@ -76,6 +81,39 @@ const getReadingList = async (req: Request, res: Response) => {
 	}
 };
 
+// DELETE remove book from read or want to read list
+const deleteReadBook = async (req: Request, res: Response) => {
+	const { clerkId } = req.params;
+	const { bookId } = req.body;
+
+	try {
+		await prisma.readingList.deleteMany({
+			where: {
+				bookId: bookId,
+				userId: clerkId,
+			},
+		});
+
+		await prisma.wishList.deleteMany({
+			where: {
+				bookId: bookId,
+				userId: clerkId,
+			},
+		});
+
+		res.status(200).json({
+			status: 'success',
+			message: `Book id ${bookId} deleted from list`,
+		});
+	} catch (error: any) {
+		res.status(400).json({
+			status: 'fail',
+			message: `Something went wrong: ${error?.message}`,
+		});
+	}
+};
+
+// Add to want to read list
 const createRead = async (req: Request, res: Response) => {
 	const { id } = req.params;
 	const { userId } = req.body;
@@ -110,6 +148,7 @@ const createRead = async (req: Request, res: Response) => {
 	}
 };
 
+// GET want to read list by user id
 const getReadList = async (req: Request, res: Response) => {
 	const { clerkId } = req.params;
 
@@ -133,6 +172,9 @@ const getReadList = async (req: Request, res: Response) => {
 					in: findAllBooks,
 				},
 			},
+			include: {
+				reviews: true,
+			},
 		});
 
 		res.status(200).json({
@@ -148,4 +190,10 @@ const getReadList = async (req: Request, res: Response) => {
 	}
 };
 
-export { createReadingList, getReadingList, createRead, getReadList };
+export {
+	createReadingList,
+	getReadingList,
+	createRead,
+	getReadList,
+	deleteReadBook,
+};

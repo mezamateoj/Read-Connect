@@ -1,7 +1,6 @@
 'use server';
 import { auth, currentUser } from '@clerk/nextjs';
 import { revalidatePath } from 'next/cache';
-import axios from 'axios';
 
 export async function getData(pageNumber: any, params: any = {}) {
 	('use server');
@@ -56,8 +55,8 @@ export async function getAllAuthors() {
 
 	// the data get cached by the browser
 	const res = await fetch('http://localhost:3001/books/authors/names', {
-		// next: { revalidate: 3600 },
-		cache: 'no-cache',
+		next: { revalidate: 3600 },
+		// cache: 'no-cache',
 	});
 
 	const data = await res.json();
@@ -72,8 +71,8 @@ export async function getAllCategories() {
 
 	// the data get cached by the browser
 	const res = await fetch('http://localhost:3001/books/categories/names', {
-		// next: { revalidate: 3600 },
-		cache: 'no-cache',
+		next: { revalidate: 3600 },
+		// cache: 'no-cache',
 	});
 
 	const data = await res.json();
@@ -112,6 +111,7 @@ export const getReviews = async (id: string) => {
 	return data;
 };
 
+// add book to read list
 export async function addBook(id: any, userId: string) {
 	const postData = {
 		userId: userId,
@@ -126,20 +126,49 @@ export async function addBook(id: any, userId: string) {
 		body: JSON.stringify(postData),
 	});
 
-	if (!res.ok) throw new Error('Book already in reading list');
+	if (!res.ok) throw new Error('Book already in read list');
 
 	const data = await res.json();
 	return data;
 }
 
+// delete book from read list
+export async function deleteReadList(bookId: number) {
+	const userId = await getUser(); // sometimes we get cant get userId in the data table component
+
+	const deleteData = {
+		userId: userId?.id,
+		bookId: bookId,
+	};
+
+	const res = await fetch(
+		`http://localhost:3001/reading-list/delete/${userId?.id}`,
+		{
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(deleteData),
+		}
+	);
+
+	if (!res.ok) throw new Error('Could not delete book from read list');
+	const data = await res.json();
+	revalidatePath('/profile');
+	return data;
+}
+
+// get read books
 export async function getReadingList(userId: string) {
-	const res = await fetch(`http://localhost:3001/reading-list/${userId}`, {
-		cache: 'no-store',
-	});
+	'use server';
+	const res = await fetch(`http://localhost:3001/reading-list/${userId}`);
 	const data = await res.json();
+
+	revalidatePath('/profile');
 	return data;
 }
 
+// add book to want to read list
 export async function addBookToWantList(id: any, userId: string) {
 	const postData = {
 		userId: userId,
@@ -163,13 +192,14 @@ export async function addBookToWantList(id: any, userId: string) {
 	return data;
 }
 
-export async function getReadList(userId: string) {
+// get want to read books
+export async function getWantReadList(userId: string) {
+	'use server';
 	const res = await fetch(
-		`http://localhost:3001/reading-list/want-read/${userId}`,
-		{
-			cache: 'no-store',
-		}
+		`http://localhost:3001/reading-list/want-read/${userId}`
 	);
 	const data = await res.json();
+
+	revalidatePath('/profile');
 	return data;
 }

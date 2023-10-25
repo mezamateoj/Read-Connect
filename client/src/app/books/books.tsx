@@ -23,14 +23,6 @@ async function Books(props: PageProps) {
 		props?.searchParams?.page || 1,
 		props?.searchParams || ''
 	);
-	// const { data, isLoading, error } = useQuery({
-	// 	queryKey: ['books'],
-	// 	queryFn: () =>
-	// 		getData(props?.searchParams?.page || 1, props?.searchParams || ''),
-	// });
-
-	// if (isLoading) return <div>Loading...</div>;
-	console.log(data);
 
 	return (
 		<div className="flex flex-col justify-between flex-1">

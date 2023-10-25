@@ -43,8 +43,6 @@ export default function Pagination(props: any) {
 		return queryString ? `&${queryString}` : '';
 	};
 
-	console.log('Pagination.tsx: pages =', generateQueryString());
-
 	return (
 		<div className="flex items-center justify-center space-x-6 text-black mt-1 mb-2 py-5">
 			<Link

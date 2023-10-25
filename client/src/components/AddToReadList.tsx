@@ -1,18 +1,19 @@
+'use client';
 import React from 'react';
-import { Button } from './ui/button';
-import { addBookToWantList } from '@/app/actions';
-import { useAuth } from '@clerk/nextjs';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Button } from './ui/button';
 import { toast } from 'sonner';
+import { useAuth } from '@clerk/nextjs';
+import { addBook } from '@/app/actions';
 
-export default function Read({ id }: { id: string }) {
+export default function AddToReadList({ id }: { id: string }) {
 	const { userId } = useAuth();
 	const queryClient = useQueryClient();
 
 	const { mutate, isLoading, error } = useMutation({
-		mutationFn: () => addBookToWantList(id, userId!),
+		mutationFn: () => addBook(id, userId!),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ['read-list'] });
+			queryClient.invalidateQueries({ queryKey: ['reading-list'] });
 			toast.success('Added to read list');
 		},
 		onError: () => {
@@ -20,9 +21,8 @@ export default function Read({ id }: { id: string }) {
 		},
 	});
 
-	if (error) {
-		toast.error('Book already in read list');
-	}
+	if (isLoading) return <div>Loading...</div>;
+
 	return (
 		<div>
 			<Button disabled={isLoading} onClick={() => mutate()}>

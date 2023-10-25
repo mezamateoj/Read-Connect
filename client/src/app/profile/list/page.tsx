@@ -1,27 +1,29 @@
-'use client';
-import { getReadList } from '@/app/actions';
-import { BooksProps } from '@/app/books/books';
-import BooksItems from '@/app/books/booksItems';
-import { useAuth } from '@clerk/nextjs';
+import { getWantReadList } from '@/app/actions';
+import { Button } from '@/components/ui/button';
+import { auth, useAuth } from '@clerk/nextjs';
 import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
 import React from 'react';
+import { DataTable } from '../data-table';
+import { columns } from '../columns';
 
-export default function MyBooks() {
-	const { userId } = useAuth();
-	const { data, isLoading, error } = useQuery({
-		queryKey: ['read-list'],
-		queryFn: () => getReadList(userId!),
-	});
-
-	if (isLoading) return <div>Loading...</div>;
+export default async function WantToReadBooks() {
+	const { userId } = auth();
+	const { readingList } = await getWantReadList(userId!);
 
 	return (
-		<div>
-			<h1>Read Books</h1>
+		<div className="flex items-center flex-col justify-center px-6 py-5">
+			<div className="flex items-center gap-3">
+				<div className="flex gap-2 justify-start">
+					<Link href="/profile/">
+						<Button>Read books</Button>
+					</Link>
+				</div>
+				<h1>Want to read</h1>
+			</div>
+
 			<div>
-				{data.readingList.map((book: BooksProps) => (
-					<BooksItems key={book.id} b={book} />
-				))}
+				<DataTable columns={columns} data={readingList} />
 			</div>
 		</div>
 	);
