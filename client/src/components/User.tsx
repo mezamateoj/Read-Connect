@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import TextReview from './TextReview';
 import Reviews from './Reviews';
+import { LoaderIcon } from 'lucide-react';
 
 const getReviews = async (id: string) => {
 	const res = await fetch(`http://localhost:3001/reviews/${id}/`, {});
@@ -27,7 +28,11 @@ export default function User({ id }: { id: string }) {
 			<TextReview userId={userId!} id={id} />
 			<div className="mt-5 divide-y-2 divide-slate-300">
 				<h2 className="font-bold text-lg py-2">Reviews</h2>
-				{/* {isLoadingReviews && <p>Add a review</p>} */}
+				{isLoadingReviews && (
+					<p>
+						<LoaderIcon className="animate-spin" />
+					</p>
+				)}
 				{!isLoadingReviews && data?.review.length > 0 ? (
 					data?.review.map((review: any) => (
 						<div key={review.id} className="">

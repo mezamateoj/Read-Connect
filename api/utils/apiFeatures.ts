@@ -58,12 +58,13 @@ class ApiFeature {
 	}
 
 	sort() {
-		// ! fix this
 		if (this.queryString.sort) {
 			const sortBy = this.queryString.sort
 				.split(',')
 				.reduce((sortObj: any, item: any) => {
-					return { ...sortObj, [item]: 'asc' };
+					const sortOrder = item.startsWith('-') ? 'desc' : 'asc';
+					const fieldName = item.replace(/^-/, ''); // remove the '-' prefix if present
+					return { ...sortObj, [fieldName]: sortOrder };
 				}, {});
 
 			this.queryOptions.orderBy = sortBy;
