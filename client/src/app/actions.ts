@@ -158,10 +158,38 @@ export async function deleteReadList(bookId: number) {
 	return data;
 }
 
+// move book from one list to another
+export async function moveFromList(bookId: number) {
+	const userId = await getUser(); // sometimes we get cant get userId in the data table component
+
+	const moveData = {
+		userId: userId?.id,
+		bookId: bookId,
+	};
+
+	const res = await fetch(
+		`http://localhost:3001/reading-list/move/${userId?.id}`,
+		{
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(moveData),
+		}
+	);
+
+	if (!res.ok) throw new Error('Could not move book to another list');
+	const data = await res.json();
+	revalidatePath('/profile');
+	return data;
+}
+
 // get read books
 export async function getReadingList(userId: string) {
 	'use server';
-	const res = await fetch(`http://localhost:3001/reading-list/${userId}`);
+	const res = await fetch(`http://localhost:3001/reading-list/${userId}`, {
+		cache: 'no-store',
+	});
 	const data = await res.json();
 
 	revalidatePath('/profile');
@@ -196,7 +224,8 @@ export async function addBookToWantList(id: any, userId: string) {
 export async function getWantReadList(userId: string) {
 	'use server';
 	const res = await fetch(
-		`http://localhost:3001/reading-list/want-read/${userId}`
+		`http://localhost:3001/reading-list/want-read/${userId}`,
+		{ cache: 'no-store' }
 	);
 	const data = await res.json();
 

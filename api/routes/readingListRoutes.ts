@@ -6,6 +6,7 @@ import {
 	createRead,
 	getReadList,
 	deleteReadBook,
+	moveBookToList,
 } from '../controllers/readingController';
 
 const router = express.Router();
@@ -18,5 +19,7 @@ router.route('/delete/:clerkId').delete(deleteReadBook);
 // Routes for want to read list
 router.route('/want-read/:id').post(createRead);
 router.route('/want-read/:clerkId').get(getReadList);
+
+router.route('/move/:clerkId').post(moveBookToList);
 
 export default router;
