@@ -190,10 +190,74 @@ const getReadList = async (req: Request, res: Response) => {
 	}
 };
 
+// Move book from one list to another
+const moveBookToList = async (req: Request, res: Response) => {
+	const { clerkId } = req.params;
+	const { bookId } = req.body;
+
+	try {
+		const bookInWishList = await prisma.wishList.findFirst({
+			where: {
+				bookId: Number(bookId),
+				userId: clerkId,
+			},
+		});
+
+		const bookInReadingList = await prisma.readingList.findFirst({
+			where: {
+				bookId: Number(bookId),
+				userId: clerkId,
+			},
+		});
+
+		if (bookInWishList === null && bookInReadingList !== null) {
+			await prisma.readingList.deleteMany({
+				where: {
+					bookId: bookId,
+					userId: clerkId,
+				},
+			});
+
+			await prisma.wishList.create({
+				data: {
+					bookId: bookId,
+					userId: clerkId,
+				},
+			});
+		}
+
+		if (bookInWishList !== null && bookInReadingList === null) {
+			await prisma.wishList.deleteMany({
+				where: {
+					bookId: bookId,
+					userId: clerkId,
+				},
+			});
+
+			await prisma.readingList.create({
+				data: {
+					bookId: bookId,
+					userId: clerkId,
+				},
+			});
+		}
+		return res.status(200).json({
+			status: 'success',
+			message: `Book id ${bookId} moved to another list`,
+		});
+	} catch (error: any) {
+		res.status(400).json({
+			status: 'fail',
+			message: `Something went wrong: ${error?.message}`,
+		});
+	}
+};
+
 export {
 	createReadingList,
 	getReadingList,
 	createRead,
 	getReadList,
 	deleteReadBook,
+	moveBookToList,
 };

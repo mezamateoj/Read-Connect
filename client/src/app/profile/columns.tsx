@@ -15,7 +15,7 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useDeleteRead } from '@/lib/hooks';
-import { deleteReadList, getUser } from '../actions';
+import { deleteReadList, getUser, moveFromList } from '../actions';
 import { toast } from 'sonner';
 
 interface reviews {
@@ -43,6 +43,9 @@ export const columns: ColumnDef<Book>[] = [
 		accessorKey: 'thumbnailUrl',
 		header: 'Cover',
 		cell: ({ row }) => {
+			if (!row.getValue('thumbnailUrl')) {
+				return <p>No Image</p>;
+			}
 			return (
 				<Image
 					src={row.getValue('thumbnailUrl')}
@@ -126,7 +129,7 @@ export const columns: ColumnDef<Book>[] = [
 	{
 		id: 'actions',
 
-		cell: ({ row, table, column }) => {
+		cell: ({ row }) => {
 			const book = row.original;
 
 			return (
@@ -150,6 +153,18 @@ export const columns: ColumnDef<Book>[] = [
 							}}
 						>
 							Delete from list
+						</DropdownMenuItem>
+						<DropdownMenuItem
+							onClick={() => {
+								moveFromList(Number(book.id));
+								setTimeout(() => {
+									toast.success(
+										'Book successfully moved from to another list'
+									);
+								}, 2000);
+							}}
+						>
+							Move to other list
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
