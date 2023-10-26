@@ -7,8 +7,10 @@ import TextReview from './TextReview';
 import Reviews from './Reviews';
 import { LoaderIcon } from 'lucide-react';
 
+const URL = process.env.NEXT_PUBLIC_API_URL;
+
 const getReviews = async (id: string) => {
-	const res = await fetch(`http://localhost:3001/reviews/${id}/`, {});
+	const res = await fetch(`${URL}/reviews/${id}/`, {});
 	const data = await res.json();
 	return data;
 };
