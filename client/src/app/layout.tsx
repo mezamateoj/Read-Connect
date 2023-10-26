@@ -5,6 +5,8 @@ import Header from '@/components/Header';
 import { ClerkProvider } from '@clerk/nextjs';
 import Providers from '@/lib/providers';
 import { Toaster } from 'sonner';
+import { ThemeProvider } from '@/components/theme-provider';
+import Footer from '@/components/Footer';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -23,9 +25,17 @@ export default function RootLayout({
 			<html lang="en">
 				<body className={`${inter.className}`}>
 					<Providers>
-						<Header />
-						{children}
-						<Toaster position="top-center" />
+						<ThemeProvider
+							attribute="class"
+							defaultTheme="dark"
+							enableSystem
+							disableTransitionOnChange
+						>
+							<Header />
+							{children}
+
+							<Toaster position="top-center" />
+						</ThemeProvider>
 					</Providers>
 				</body>
 			</html>

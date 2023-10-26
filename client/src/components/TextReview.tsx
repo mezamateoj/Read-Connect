@@ -18,6 +18,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { Rating } from '@mui/material';
 import { useCreateReview } from '@/lib/hooks';
+import { Star } from 'lucide-react';
 
 const FormSchema = z.object({
 	review: z
@@ -98,10 +99,14 @@ export default function TextReview({
 									render={({ field }) => (
 										<Rating
 											name="rating"
+											style={{ borderColor: '#f5df4d' }}
 											value={field.value}
 											onChange={(event, newValue) => {
 												field.onChange(newValue);
 											}}
+											emptyIcon={
+												<Star className="dark:text-white" />
+											}
 										/>
 									)}
 								/>

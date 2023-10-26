@@ -27,7 +27,7 @@ async function Books(props: PageProps) {
 	return (
 		<div className="flex flex-col justify-between flex-1">
 			<div className="flex-grow">
-				<ul className="divide-y divide-stone-300/80 px-4 sm:px-3">
+				<ul className="divide-y divide-stone-400/80 px-4 sm:px-3">
 					{data.length === 0 && <Empty />}
 					{data.map((b: BooksProps) => (
 						<BooksItems key={b.id} b={b} />

@@ -15,7 +15,6 @@ export default async function Page(props: PageProps) {
 		<div className="flex px-5 py-4 sm:px-6 sm:py-5 flex-col gap-5">
 			<div className="flex items-center gap-2">
 				<Sort
-					URL="http://localhost:3001/books/"
 					text="Select Category"
 					target="categories"
 					categories={categories.content}

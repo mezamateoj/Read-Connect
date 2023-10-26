@@ -44,10 +44,10 @@ export default function Pagination(props: any) {
 	};
 
 	return (
-		<div className="flex items-center justify-center space-x-6 text-black mt-1 mb-2 py-5">
+		<div className="flex items-center justify-center space-x-6 mt-1 mb-2 py-5">
 			<Link
 				className={cn(
-					'rounded-md border border-gray-300 px-3 py-2 text-sm font-medium hover:bg-gray-50',
+					'rounded-md border border-gray-300 px-3 py-2 text-sm font-medium hover:bg-gray-50 hover:dark:bg-stone-500',
 					currentPage === 1
 						? 'pointer-events-none bg-gray-100 line-through text-gray-500'
 						: ''
@@ -65,9 +65,9 @@ export default function Pagination(props: any) {
 					<Link
 						key={p}
 						className={cn(
-							'relative inline-flex items-center border border-gray-300 px-4 py-2 text-sm font-medium hover:bg-gray-50',
+							'relative inline-flex items-center border border-gray-300 px-4 py-2 text-sm font-medium hover:dark:bg-stone-600 hover:bg-gray-100',
 							p === currentPage
-								? 'pointer-events-none bg-gray-100'
+								? 'pointer-events-none dark:bg-stone-600 bg-gray-100 '
 								: '',
 							i === 0 ? 'rounded-l-md' : '',
 							i === pages.length - 1 ? 'rounded-r-md' : ''
@@ -81,7 +81,7 @@ export default function Pagination(props: any) {
 
 			<Link
 				className={cn(
-					'rounded-md border border-gray-300 px-3 py-2 text-sm font-medium hover:bg-gray-50',
+					'rounded-md border border-gray-300 px-3 py-2 text-sm font-medium hover:bg-gray-50 hover:dark:bg-stone-600',
 					!hasNextPage
 						? 'pointer-events-none bg-gray-100 line-through text-gray-500'
 						: ''

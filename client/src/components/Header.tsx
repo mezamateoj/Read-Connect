@@ -3,11 +3,12 @@ import { UserButton, auth } from '@clerk/nextjs';
 import SearchBar from './SearchBar';
 import { Button } from './ui/button';
 import { Home, Library } from 'lucide-react';
+import SetTheme from './SetTheme';
 
 function Header() {
 	const { userId } = auth();
 	return (
-		<header className="flex flex-wrap items-center justify-between border-b-2 border-stone-200 bg-stone-900 px-4 py-3 uppercase sm:px-8 sm:py-5 text-white">
+		<header className="flex flex-wrap items-center justify-between border-b-2 border-stone-900 bg-stone-900 px-4 py-3 uppercase sm:px-8 sm:py-5 text-white">
 			<Link href="/" className="tracking-widest text-sm sm:text-lg">
 				ReadConnect.
 			</Link>
@@ -25,6 +26,9 @@ function Header() {
 			</Link>
 			<div className="hidden sm:block">
 				<SearchBar />
+			</div>
+			<div>
+				<SetTheme />
 			</div>
 			{userId ? (
 				<div className="hidden sm:block">

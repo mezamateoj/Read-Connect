@@ -2,6 +2,8 @@
 import { auth, currentUser } from '@clerk/nextjs';
 import { revalidatePath } from 'next/cache';
 
+const URL = process.env.NEXT_PUBLIC_API_URL;
+
 export async function getData(pageNumber: any, params: any = {}) {
 	('use server');
 	delete params['page'];
@@ -10,7 +12,7 @@ export async function getData(pageNumber: any, params: any = {}) {
 
 	if (queryParams.includes('title')) {
 		const res = await fetch(
-			`http://localhost:3001/books/search/${queryParams.split('=')[1]}`
+			`${URL}/books/search/${queryParams.split('=')[1]}`
 			// {
 			// 	// next: { revalidate: 3600 },
 			// 	cache: 'no-cache',
@@ -23,7 +25,7 @@ export async function getData(pageNumber: any, params: any = {}) {
 
 	// the data gets cached by the browser
 	const res = await fetch(
-		`http://localhost:3001/books/?page=${pageNumber}&${queryParams}`
+		`${URL}/books/?page=${pageNumber}&${queryParams}`
 		// {
 		// 	// next: { revalidate: 3600 },
 		// 	cache: 'no-cache',
@@ -50,27 +52,11 @@ export async function getUser() {
 	return user;
 }
 
-export async function getAllAuthors() {
-	('use server');
-
-	// the data get cached by the browser
-	const res = await fetch('http://localhost:3001/books/authors/names', {
-		next: { revalidate: 3600 },
-		// cache: 'no-cache',
-	});
-
-	const data = await res.json();
-
-	// revalidatePath(`/books`);
-
-	return data;
-}
-
 export async function getAllCategories() {
 	('use server');
 
 	// the data get cached by the browser
-	const res = await fetch('http://localhost:3001/books/categories/names', {
+	const res = await fetch(`${URL}/books/categories/names`, {
 		next: { revalidate: 3600 },
 		// cache: 'no-cache',
 	});
@@ -89,7 +75,7 @@ export interface ReviewData {
 }
 
 export const postReview = async (id: string, data: ReviewData) => {
-	const res = await fetch(`http://localhost:3001/reviews/${id}/`, {
+	const res = await fetch(`${URL}/reviews/${id}/`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -106,7 +92,7 @@ export const postReview = async (id: string, data: ReviewData) => {
 };
 
 export const getReviews = async (id: string) => {
-	const res = await fetch(`http://localhost:3001/reviews/${id}/`, {});
+	const res = await fetch(`${URL}/reviews/${id}/`, {});
 	const data = await res.json();
 	return data;
 };
@@ -118,7 +104,7 @@ export async function addBook(id: any, userId: string) {
 		bookId: Number(id),
 	};
 
-	const res = await fetch(`http://localhost:3001/reading-list/${id}`, {
+	const res = await fetch(`${URL}/reading-list/${id}`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -141,16 +127,13 @@ export async function deleteReadList(bookId: number) {
 		bookId: bookId,
 	};
 
-	const res = await fetch(
-		`http://localhost:3001/reading-list/delete/${userId?.id}`,
-		{
-			method: 'DELETE',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(deleteData),
-		}
-	);
+	const res = await fetch(`${URL}/reading-list/delete/${userId?.id}`, {
+		method: 'DELETE',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(deleteData),
+	});
 
 	if (!res.ok) throw new Error('Could not delete book from read list');
 	const data = await res.json();
@@ -167,16 +150,13 @@ export async function moveFromList(bookId: number) {
 		bookId: bookId,
 	};
 
-	const res = await fetch(
-		`http://localhost:3001/reading-list/move/${userId?.id}`,
-		{
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(moveData),
-		}
-	);
+	const res = await fetch(`${URL}/reading-list/move/${userId?.id}`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(moveData),
+	});
 
 	if (!res.ok) throw new Error('Could not move book to another list');
 	const data = await res.json();
@@ -187,7 +167,7 @@ export async function moveFromList(bookId: number) {
 // get read books
 export async function getReadingList(userId: string) {
 	'use server';
-	const res = await fetch(`http://localhost:3001/reading-list/${userId}`, {
+	const res = await fetch(`${URL}/reading-list/${userId}`, {
 		cache: 'no-store',
 	});
 	const data = await res.json();
@@ -203,16 +183,13 @@ export async function addBookToWantList(id: any, userId: string) {
 		bookId: Number(id),
 	};
 
-	const res = await fetch(
-		`http://localhost:3001/reading-list/want-read/${id}`,
-		{
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(postData),
-		}
-	);
+	const res = await fetch(`${URL}/reading-list/want-read/${id}`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(postData),
+	});
 
 	if (!res.ok) throw new Error('Book already in reading list');
 
@@ -223,10 +200,9 @@ export async function addBookToWantList(id: any, userId: string) {
 // get want to read books
 export async function getWantReadList(userId: string) {
 	'use server';
-	const res = await fetch(
-		`http://localhost:3001/reading-list/want-read/${userId}`,
-		{ cache: 'no-store' }
-	);
+	const res = await fetch(`${URL}/reading-list/want-read/${userId}`, {
+		cache: 'no-store',
+	});
 	const data = await res.json();
 
 	revalidatePath('/profile');

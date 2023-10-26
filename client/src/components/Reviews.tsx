@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Rating from '@mui/material/Rating';
+import { Star } from 'lucide-react';
 
 interface Review {
 	id: number;
@@ -24,7 +25,12 @@ export default function Reviews(props: Props) {
 			</div>
 
 			<div>
-				<Rating name="read-only" value={reviews.rating} readOnly />
+				<Rating
+					name="read-only"
+					value={reviews.rating}
+					readOnly
+					emptyIcon={<Star className="dark:text-white" />}
+				/>
 			</div>
 		</div>
 	);
