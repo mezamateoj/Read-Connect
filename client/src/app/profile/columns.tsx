@@ -121,7 +121,9 @@ export const columns: ColumnDef<Book>[] = [
 				) / ((row.getValue('reviews') as reviews[]) || []).length;
 			return (
 				<span className="text-sm capitalize italic text-stone-500">
-					{!isNaN(averageRating) ? averageRating : 'No Reviews'}
+					{!isNaN(averageRating)
+						? averageRating.toFixed(2)
+						: 'No Reviews'}
 				</span>
 			);
 		},

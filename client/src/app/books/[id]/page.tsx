@@ -9,8 +9,10 @@ import { Skeleton } from '@/components/ui/skeleton';
 import AddToReadList from '@/components/AddToReadList';
 import AddToWantToRead from '@/components/AddToWantToRead';
 
+const URL = process.env.NEXT_PUBLIC_API_URL;
+
 const getData = async (id: string) => {
-	const res = await fetch(`http://localhost:3001/books/${id}`);
+	const res = await fetch(`${URL}/books/${id}`);
 
 	if (!res.ok) throw new Error('Could not get the book!');
 
