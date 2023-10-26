@@ -5,7 +5,7 @@ import { Button } from './ui/button';
 import { toast } from 'sonner';
 import { useAuth } from '@clerk/nextjs';
 import { addBook } from '@/app/actions';
-import { LoaderIcon } from 'lucide-react';
+import { Loader2, LoaderIcon } from 'lucide-react';
 
 export default function AddToReadList({ id }: { id: string }) {
 	const { userId } = useAuth();
@@ -25,15 +25,20 @@ export default function AddToReadList({ id }: { id: string }) {
 	if (isLoading)
 		return (
 			<div>
-				<Button disabled={isLoading}>
-					<LoaderIcon className="animate-spin" />
+				<Button disabled>
+					<Loader2 className="mr-2 h-4 w-4 animate-spin" />
+					Please wait
 				</Button>
 			</div>
 		);
 
 	return (
 		<div>
-			<Button disabled={isLoading} onClick={() => mutate()}>
+			<Button
+				variant="outline"
+				disabled={isLoading}
+				onClick={() => mutate()}
+			>
 				Mark as read
 			</Button>
 		</div>

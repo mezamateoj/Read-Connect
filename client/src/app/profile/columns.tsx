@@ -108,7 +108,7 @@ export const columns: ColumnDef<Book>[] = [
 						column.toggleSorting(column.getIsSorted() === 'asc')
 					}
 				>
-					Reviews
+					Ratings
 					<ArrowUpDown className="ml-2 h-4 w-4" />
 				</Button>
 			);
@@ -159,7 +159,7 @@ export const columns: ColumnDef<Book>[] = [
 								moveFromList(Number(book.id));
 								setTimeout(() => {
 									toast.success(
-										'Book successfully moved from to another list'
+										'Book successfully moved to another list'
 									);
 								}, 2000);
 							}}

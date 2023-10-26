@@ -4,7 +4,7 @@ import { addBookToWantList } from '@/app/actions';
 import { useAuth } from '@clerk/nextjs';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { LoaderIcon } from 'lucide-react';
+import { Loader2, LoaderIcon } from 'lucide-react';
 
 export default function AddToWantToRead({ id }: { id: string }) {
 	const { userId } = useAuth();
@@ -28,15 +28,20 @@ export default function AddToWantToRead({ id }: { id: string }) {
 	if (isLoading) {
 		return (
 			<div>
-				<Button disabled={isLoading}>
-					<LoaderIcon className="animate-spin" />
+				<Button disabled>
+					<Loader2 className="mr-2 h-4 w-4 animate-spin" />
+					Please wait
 				</Button>
 			</div>
 		);
 	}
 	return (
 		<div>
-			<Button disabled={isLoading} onClick={() => mutate()}>
+			<Button
+				variant="outline"
+				disabled={isLoading}
+				onClick={() => mutate()}
+			>
 				Want to read
 			</Button>
 		</div>

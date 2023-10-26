@@ -34,7 +34,7 @@ function SearchBar() {
 				type="text"
 				placeholder="title word: ex. 'python'"
 				value={query}
-				className="text-black placeholder:text-xs"
+				className="placeholder:text-sm text-black dark:text-white"
 				onChange={(e) => setQuery(e.target.value)}
 			/>
 		</form>

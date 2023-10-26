@@ -28,12 +28,12 @@ export default function BooksItems({ b }: { b: BooksProps }) {
 						{formatDate(b.publishedDate)}
 					</span>
 				</p>
-				<p className="text-sm capitalize  text-stone-800 divide-x-2 divide-slate-400 gap-2">
+				<p className="text-sm capitalize  text-stone-300 divide-x-2 divide-slate-400 gap-2">
 					{b.authors.map(
 						(a) =>
 							a !== '' && (
 								<Link href={`/books/?authors=${a}`} key={a}>
-									<span className="text-stone-800 hover:underline ml-1">
+									<span className="text-stone-400 hover:underline ml-1">
 										{a} &nbsp;
 									</span>
 								</Link>

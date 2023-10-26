@@ -25,20 +25,20 @@ export default function User({ id }: { id: string }) {
 
 	if (isLoadingReviews)
 		return (
-			<p>
+			<p className="flex items-center justify-center py-5 px-6">
 				<LoaderIcon className="animate-spin" />
 			</p>
 		);
 
 	return (
 		<div className="py-2">
-			{isLoadingReviews ? (
+			{/* {isLoadingReviews ? (
 				<LoaderIcon className="animate-spin mt-5" />
 			) : (
-				<TextReview userId={userId!} id={id} />
-			)}
+				)} */}
+			<TextReview userId={userId!} id={id} />
 			<div className="mt-5 divide-y-2 divide-slate-300">
-				<h2 className="font-bold text-lg py-2">Reviews</h2>
+				<h2 className="font-bold text-2xl py-2">Reviews</h2>
 				{isLoadingReviews && (
 					<p>
 						<LoaderIcon className="animate-spin" />
@@ -51,7 +51,7 @@ export default function User({ id }: { id: string }) {
 						</div>
 					))
 				) : (
-					<p className="font-semibold">Add a review</p>
+					<p className="font-semibold text-lg mt-1">Add a review</p>
 				)}
 			</div>
 		</div>

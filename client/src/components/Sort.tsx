@@ -23,12 +23,10 @@ import Back from './Back';
 import PageCountSort from './PageCountSort';
 
 export function Sort({
-	URL,
 	text,
 	target,
 	categories,
 }: {
-	URL: string;
 	text: string;
 	target: string;
 	categories: string[];
@@ -71,7 +69,7 @@ export function Sort({
 							{originData?.map((a: string) => (
 								<CommandItem
 									key={a}
-									className="text-black capitalize"
+									className="capitalize"
 									onSelect={(a) => {
 										setValue(a);
 										handleAuthorClick(a);
