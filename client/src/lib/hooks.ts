@@ -37,8 +37,7 @@ export function useDeleteRead() {
 	const queryClient = useQueryClient();
 
 	const { isLoading, mutate } = useMutation({
-		mutationFn: (params: DeleteParams) =>
-			deleteReadList(params.userId, params.bookId),
+		mutationFn: (params: DeleteParams) => deleteReadList(params.bookId),
 		onSuccess: () => {
 			queryClient.invalidateQueries({
 				queryKey: ['reading-list', 'want-read-list'],
